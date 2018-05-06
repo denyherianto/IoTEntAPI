@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "micro-dev -l tcp://0.0.0.0:3999",
-    "start": "micro -l tcp://0.0.0.0:4001",
+    "dev": "micro-dev -p 3999",
+    "start": "micro -p 4001",
     "lint": "xo",
     "test": "npm run lint && ava"
   },

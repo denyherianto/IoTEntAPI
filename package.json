@@ -20,6 +20,7 @@
     "express-graphql": "^0.6.12",
     "google-auth-library": "^1.4.0",
     "graphql": "^0.13.2",
+    "jsonwebtoken": "^8.2.1",
     "micro": "latest",
     "micro-cors": "^0.1.0",
     "micro-health-api": "^1.0.4",

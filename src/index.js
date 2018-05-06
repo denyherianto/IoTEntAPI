@@ -202,7 +202,7 @@ module.exports = cors(router(
   get('/', init),
   get('/hello/:who', hello),
   post('/authorize', authorize),
-  post('/refresh-token', refresh_token),
+  // post('/refresh-token', refresh_token),
   // apiNamespace(post('/graphql', graphqlHandler)),
   // apiNamespace(get('/graphql', graphiqlHandler)),
 ))

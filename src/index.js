@@ -90,7 +90,6 @@ const authorize = async (req, res) => {
             }
           })
           .spread((user, created) => {
-            const message;
             if (created) {
               // Register User
               message = 'User successfully registered';
@@ -132,57 +131,57 @@ const authorize = async (req, res) => {
   });
 }
 
-const refresh_token = async (req, res) => {
-  const message = 'Response successfully generated'
-  const body = await json(req)
+// const refresh_token = async (req, res) => {
+//   const message = 'Response successfully generated'
+//   const body = await json(req)
 
-  if (!body.token) {
-    send(res, 500, {
-      success: false,
-      message: 'Please provide token'
-    })
-  }
+//   if (!body.token) {
+//     send(res, 500, {
+//       success: false,
+//       message: 'Please provide token'
+//     })
+//   }
 
-  const {OAuth2Client} = require('google-auth-library');
-  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-  async function verify() {
-    const ticket = await client.verifyIdToken({
-        idToken: body.token,
-        audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const payload = ticket.getPayload();
-    const userid = payload['sub'];
-    // If request specified a G Suite domain:
-    const domain = payload['hd'];
+//   const {OAuth2Client} = require('google-auth-library');
+//   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+//   async function verify() {
+//     const ticket = await client.verifyIdToken({
+//         idToken: body.token,
+//         audience: process.env.GOOGLE_CLIENT_ID,
+//     });
+//     const payload = ticket.getPayload();
+//     const userid = payload['sub'];
+//     // If request specified a G Suite domain:
+//     const domain = payload['hd'];
 
-    if (domain === process.env.BL_DOMAIN) {
-      try {
-        send(res, 200, {
-          success: true,
-          message: 'User successfully created',
-          // user: result.toJSON()
-          user: payload,
-        })
-      } catch (err) {
-        send(res, 500, {
-          success: false,
-          message: 'User failed to create'
-        })
-      }
-    } else {
-      send(res, 500, {
-        success: false,
-        message: 'User not registered as Bukalapak Employee.'
-      })
-    }
-  }
-  verify().catch(() => {
-    send(res, 500, {
-      success: false,
-      message: 'Google verify error'
-    })
-  });
-}
+//     if (domain === process.env.BL_DOMAIN) {
+//       try {
+//         send(res, 200, {
+//           success: true,
+//           message: 'User successfully created',
+//           // user: result.toJSON()
+//           user: payload,
+//         })
+//       } catch (err) {
+//         send(res, 500, {
+//           success: false,
+//           message: 'User failed to create'
+//         })
+//       }
+//     } else {
+//       send(res, 500, {
+//         success: false,
+//         message: 'User not registered as Bukalapak Employee.'
+//       })
+//     }
+//   }
+//   verify().catch(() => {
+//     send(res, 500, {
+//       success: false,
+//       message: 'Google verify error'
+//     })
+//   });
+// }
 
 /*
 const graphqlHandler = server({
@@ -198,12 +197,12 @@ const graphiqlHandler = server({
 });
 */
 
-const apiNamespace = withNamespace('/user')
+// const apiNamespace = withNamespace('/user')
 module.exports = cors(router(
-  apiNamespace(get('/', init)),
-  apiNamespace(get('/hello/:who', hello)),
-  apiNamespace(post('/authorize', authorize)),
-  apiNamespace(post('/refresh-token', refresh_token)),
+  get('/', init),
+  get('/hello/:who', hello),
+  post('/authorize', authorize),
+  post('/refresh-token', refresh_token),
   // apiNamespace(post('/graphql', graphqlHandler)),
   // apiNamespace(get('/graphql', graphiqlHandler)),
 ))
